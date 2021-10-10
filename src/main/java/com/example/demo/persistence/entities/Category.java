@@ -8,6 +8,7 @@ public class Category {
 
     @Id
     @SequenceGenerator(name="seq", sequenceName = "seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Integer id;
     @Column

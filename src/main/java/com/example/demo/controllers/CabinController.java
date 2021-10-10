@@ -19,6 +19,9 @@ public class CabinController {
     @PostMapping(path="save")
     public ResponseEntity<Cabin> saveNewCabin(@RequestBody Cabin cabin){
         Cabin cabinSaved = cabinService.saveEntity(cabin);
+        if(cabinSaved.getRooms() == null || cabinSaved.getBrand() == null){
+            return new ResponseEntity<>(cabinSaved, HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<>(cabinSaved, HttpStatus.CREATED);
     }
 

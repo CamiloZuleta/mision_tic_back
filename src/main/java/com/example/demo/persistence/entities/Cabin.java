@@ -8,6 +8,7 @@ public class Cabin {
 
     @Id
     @SequenceGenerator(name="seq", sequenceName = "seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column
     private String brand;
