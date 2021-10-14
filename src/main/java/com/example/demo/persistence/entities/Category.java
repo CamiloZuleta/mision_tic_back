@@ -11,14 +11,14 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Integer id;
-    @Column
-    private String nombre;
-    @Column
+    @Column(name = "name")
+    private String name;
+    @Column(name="description")
     private String description;
 
 
-    public Category(String nombre, String description) {
-        this.nombre = nombre;
+    public Category(String name, String description) {
+        this.name = name;
         this.description = description;
     }
 
@@ -28,12 +28,12 @@ public class Category {
         return id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {

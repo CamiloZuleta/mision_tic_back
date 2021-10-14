@@ -14,10 +14,11 @@ public class CategoryServiceImpl implements EntityService<Category>{
 
     @Override
     public Category saveEntity(Category entity) {
-        boolean cumple = entity.getDescription().length()<=250 && entity.getNombre().length() <=45;
+        boolean cumple = entity.getDescription().length()<=250 && entity.getName().length() <=45;
         if (cumple){
             return categoryRepository.save(entity);
         }
+
         return new Category(null, null);
     }
 

@@ -19,7 +19,7 @@ public class CategoryController {
     @PostMapping(path = "/save")
     public ResponseEntity<Category> saveCategory(@RequestBody Category category){
         Category category1 = categoryService.saveEntity(category);
-        if (category1.getNombre() == null){
+        if (category1.getName() == null){
             return new ResponseEntity<>(category1, HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(category1, HttpStatus.CREATED);

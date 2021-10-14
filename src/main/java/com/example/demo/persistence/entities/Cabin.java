@@ -1,7 +1,12 @@
 package com.example.demo.persistence.entities;
 
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
 
+import javax.persistence.*;
+import java.util.List;
+
+@Getter
 @Entity
 @Table(name="cabin")
 public class Cabin {
@@ -19,9 +24,17 @@ public class Cabin {
     @Column
     private String description;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
+
+    @OneToMany(cascade=CascadeType.MERGE, mappedBy="cabin")
+    @JsonIgnore
+    private List<Message> messages;
+
+    @OneToMany(cascade=CascadeType.MERGE, mappedBy="cabin")
+    @JsonIgnore
+    private List<Reservation> reservations;
 
     public Cabin(String brand, String name, Integer rooms, String description, Category category) {
         this.brand = brand;
@@ -32,6 +45,10 @@ public class Cabin {
     }
 
     public Cabin(){}
+
+    public Cabin(Long id){
+        this.id = id;
+    }
 
     public void setBrand(String brand) {
         this.brand = brand;
@@ -53,27 +70,11 @@ public class Cabin {
         this.description = description;
     }
 
-    public Long getId() {
-        return id;
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
     }
 
-    public String getBrand() {
-        return brand;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Integer getRooms() {
-        return rooms;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public Category getCategory() {
-        return category;
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
     }
 }
