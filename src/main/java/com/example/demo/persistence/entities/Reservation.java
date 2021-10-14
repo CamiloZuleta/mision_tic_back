@@ -11,6 +11,7 @@ import java.util.Date;
 public class Reservation {
 
     @Id
+    @SequenceGenerator(name="seq", sequenceName = "seq")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Date startDate;
@@ -25,6 +26,18 @@ public class Reservation {
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="cabinId")
     private Cabin cabin;
+
+    public Reservation() {
+    }
+
+    public Reservation(Date startDate, Date devolutionDate, String status, Date createdDate, Client client, Cabin cabin) {
+        this.startDate = startDate;
+        this.devolutionDate = devolutionDate;
+        Status = status;
+        this.createdDate = createdDate;
+        this.client = client;
+        this.cabin = cabin;
+    }
 
     public void setStartDate(Date startDate) {
         this.startDate = startDate;

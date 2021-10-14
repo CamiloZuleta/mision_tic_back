@@ -33,7 +33,7 @@ public class ReservationServiceImpl implements EntityService<Reservation>{
         entity.setCreatedDate(currentDate);
         entity.setCabin(cabin);
         entity.setClient(client);
-        return entity;
+        return reservationRepository.save(entity);
     }
 
     @Override
