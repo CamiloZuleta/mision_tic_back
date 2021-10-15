@@ -1,5 +1,6 @@
 package com.example.demo.persistence.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 
@@ -18,6 +19,7 @@ public class Reservation {
     private Date startDate;
     private Date devolutionDate;
     private String status;
+    @JsonIgnore
     private Date createdDate;
 
     @JsonIgnoreProperties({"reservations","client"})
