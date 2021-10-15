@@ -1,6 +1,5 @@
 package com.example.demo.persistence.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 
@@ -16,21 +15,21 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idClient;
-    @Column(name = "nombre")
-    private String name;
     @Column(name = "correo")
     private String email;
-    @Column(name = "edad")
-    private Integer age;
     @Column(name = "password")
     private String password;
+    @Column(name = "nombre")
+    private String name;
+    @Column(name = "edad")
+    private Integer age;
 
+    @JsonIgnoreProperties({"client"})
     @OneToMany(cascade = CascadeType.MERGE, mappedBy = "client")
-    @JsonIgnore
     private List<Message> messages;
 
+    @JsonIgnoreProperties({"client"})
     @OneToMany(cascade = CascadeType.MERGE, mappedBy = "client")
-    @JsonIgnore
     private List<Reservation> reservations;
 
     public Client(){

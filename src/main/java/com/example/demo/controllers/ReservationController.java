@@ -1,7 +1,9 @@
 package com.example.demo.controllers;
 
+import com.example.demo.DTO.MessageDto;
 import com.example.demo.persistence.entities.Reservation;
 import com.example.demo.services.ReservationServiceImpl;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,9 @@ import java.util.List;
 public class ReservationController {
     @Autowired
     ReservationServiceImpl reservationService;
+
+    @Autowired
+    ObjectMapper mapper;
 
     private static final Logger logger = LogManager.getLogger(MessageController.class);
 

@@ -27,10 +27,13 @@ public class MessageServiceImpl implements EntityService<Message>{
     @Override
     public Message saveEntity(Message entity) {
         boolean cumple = entity.getMessageText().length()<= 250;
+        /*
         Client client = clientRepository.findById(entity.getClient().getIdClient()).get();
         Cabin cabin = cabinRepository.findById(entity.getCabin().getId()).get();
         entity.setCabin(cabin);
         entity.setClient(client);
+
+         */
         if(cumple){
             return messageRepository.save(entity);
         }

@@ -1,9 +1,10 @@
 package com.example.demo.persistence.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -16,64 +17,111 @@ public class Cabin {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column
-    private String brand;
-    @Column
     private String name;
+    @Column
+    private String brand;
     @Column
     private Integer rooms;
     @Column
     private String description;
 
-    @OneToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "category_id", referencedColumnName = "id")
+    @JsonIgnoreProperties("cabins")
     private Category category;
 
+    @JsonIgnoreProperties({"cabin","client"})
     @OneToMany(cascade=CascadeType.MERGE, mappedBy="cabin")
-    @JsonIgnore
-    private List<Message> messages;
+    private List<Message> messages = new ArrayList<>();
 
+    @JsonIgnoreProperties("cabin")
     @OneToMany(cascade=CascadeType.MERGE, mappedBy="cabin")
-    @JsonIgnore
-    private List<Reservation> reservations;
+    private List<Reservation> reservations = new ArrayList<>();
 
-    public Cabin(String brand, String name, Integer rooms, String description, Category category) {
+
+    /**
+     * @param brand
+     * @param name
+     * @param rooms
+     * @param description
+     * @param category
+     */
+    public Cabin(String brand, String name, Integer rooms, String description, Category category, List<Message> messages,
+    List<Reservation> reservations) {
         this.brand = brand;
         this.rooms = rooms;
         this.category = category;
         this.name = name;
         this.description = description;
+        this.messages = messages;
+        this.reservations = reservations;
     }
 
+    /**
+     *
+     */
     public Cabin(){}
 
+    /**
+     *
+     * @param id
+     */
     public Cabin(Long id){
         this.id = id;
     }
 
+    /**
+     *
+     * @param brand
+     */
     public void setBrand(String brand) {
         this.brand = brand;
     }
 
+    /**
+     *
+     * @param rooms
+     */
     public void setRooms(Integer rooms) {
         this.rooms = rooms;
     }
 
+    /**
+     *
+     * @param category
+     */
     public void setCategory(Category category) {
         this.category = category;
     }
 
+    /**
+     *
+     * @param name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     *
+     * @param description
+     */
     public void setDescription(String description) {
         this.description = description;
     }
 
+    /**
+     *
+     * @param messages
+     */
     public void setMessages(List<Message> messages) {
         this.messages = messages;
     }
 
+    /**
+     *
+     * @param reservations
+     */
     public void setReservations(List<Reservation> reservations) {
         this.reservations = reservations;
     }

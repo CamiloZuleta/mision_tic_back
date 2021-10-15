@@ -13,18 +13,21 @@ public class Message {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
+    private Integer idMessage;
     @Column(name = "text_message")
     private String messageText;
 
+    @JsonIgnoreProperties({"messages","reservations","client"})
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name="cabinId")
+    private Cabin cabin;
+
+    @JsonIgnoreProperties({"messages","reservations"})
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="idClient")
     private Client client;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name="cabinId")
-    private Cabin cabin;
+
 
     public Message() {
     }

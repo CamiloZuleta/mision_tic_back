@@ -1,7 +1,14 @@
 package com.example.demo.persistence.entities;
 
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Getter;
 
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Getter
 @Entity
 @Table(name = "category_id")
 public class Category {
@@ -16,31 +23,28 @@ public class Category {
     @Column(name="description")
     private String description;
 
+    @OneToMany(cascade = CascadeType.MERGE,mappedBy="category")
+    @JsonIgnoreProperties("category")
+    private List<Cabin> cabins = new ArrayList<>();
 
-    public Category(String name, String description) {
+
+    public Category(String name, String description, List<Cabin> cabins) {
         this.name = name;
         this.description = description;
+        this.cabins = cabins;
     }
 
     public Category(){}
-
-    public Integer getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setCabins(List<Cabin> cabins) {
+        this.cabins = cabins;
     }
 }

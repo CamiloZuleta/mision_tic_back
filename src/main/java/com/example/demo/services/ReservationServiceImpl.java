@@ -29,7 +29,7 @@ public class ReservationServiceImpl implements EntityService<Reservation>{
         Date currentDate = new Date();
         Client client = clientRepository.findById(entity.getClient().getIdClient()).get();
         Cabin cabin = cabinRepository.findById(entity.getCabin().getId()).get();
-        entity.setStatus("Creado");
+        entity.setStatus("created");
         entity.setCreatedDate(currentDate);
         entity.setCabin(cabin);
         entity.setClient(client);

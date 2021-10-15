@@ -1,5 +1,6 @@
 package com.example.demo.persistence.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -13,19 +14,23 @@ public class Reservation {
     @Id
     @SequenceGenerator(name="seq", sequenceName = "seq")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer idReservation;
     private Date startDate;
     private Date devolutionDate;
-    private String Status;
+    private String status;
     private Date createdDate;
 
+    @JsonIgnoreProperties({"reservations","client"})
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name="cabinId")
+    private Cabin cabin;
+
+    @JsonIgnoreProperties({"reservations","messages"})
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="idClient")
     private Client client;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name="cabinId")
-    private Cabin cabin;
+    private String score;
 
     public Reservation() {
     }
@@ -33,7 +38,7 @@ public class Reservation {
     public Reservation(Date startDate, Date devolutionDate, String status, Date createdDate, Client client, Cabin cabin) {
         this.startDate = startDate;
         this.devolutionDate = devolutionDate;
-        Status = status;
+        this.status = status;
         this.createdDate = createdDate;
         this.client = client;
         this.cabin = cabin;
@@ -56,7 +61,7 @@ public class Reservation {
     }
 
     public void setStatus(String status) {
-        Status = status;
+        this.status = status;
     }
 
     public void setCreatedDate(Date createdDate) {
