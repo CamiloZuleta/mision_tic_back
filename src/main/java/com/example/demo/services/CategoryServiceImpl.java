@@ -34,4 +34,28 @@ public class CategoryServiceImpl implements EntityService<Category>{
     public List<Category> getEntity() {
         return categoryRepository.findAll();
     }
+
+    @Override
+    public Category updateEntity(Category entity) {
+        boolean comply = entity.getDescription().length()<=250 && entity.getName().length()<=45;
+        Category category = categoryRepository.findById(entity.getId()).orElse(new Category("Not updated"));
+        if(comply && !category.getDescription().equals("Not updated")){
+            category.setDescription(entity.getDescription());
+            category.setName(entity.getName());
+            categoryRepository.save(category);
+        }
+        return category;
+    }
+
+    @Override
+    public Category deleteEntity(Integer id) {
+        Category category  = categoryRepository.findById(id).orElse(new Category("Not deleted"));
+        boolean comply = category.getCabins().isEmpty();
+        if (comply && !category.getDescription().equals("Not deleted")){
+            categoryRepository.deleteById(id);
+        }else{
+            category.setDescription("Not deleted");
+        }
+        return category;
+    }
 }

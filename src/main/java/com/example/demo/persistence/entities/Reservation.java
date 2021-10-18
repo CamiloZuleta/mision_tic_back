@@ -23,12 +23,12 @@ public class Reservation {
     private Date createdDate;
 
     @JsonIgnoreProperties({"reservations","client"})
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name="cabinId")
     private Cabin cabin;
 
     @JsonIgnoreProperties({"reservations","messages"})
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name="idClient")
     private Client client;
 
@@ -44,6 +44,10 @@ public class Reservation {
         this.createdDate = createdDate;
         this.client = client;
         this.cabin = cabin;
+    }
+
+    public Reservation(String status){
+        this.status = status;
     }
 
     public void setStartDate(Date startDate) {

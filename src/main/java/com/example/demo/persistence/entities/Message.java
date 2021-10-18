@@ -18,18 +18,20 @@ public class Message {
     private String messageText;
 
     @JsonIgnoreProperties({"messages","reservations","client"})
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name="cabinId")
     private Cabin cabin;
 
     @JsonIgnoreProperties({"messages","reservations"})
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name="idClient")
     private Client client;
 
-
-
     public Message() {
+    }
+
+    public Message(String messageText) {
+        this.messageText = messageText;
     }
 
     public Message(String messageText, Client client, Cabin cabin){

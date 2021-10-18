@@ -23,7 +23,7 @@ public class Category {
     @Column(name="description")
     private String description;
 
-    @OneToMany(cascade = CascadeType.MERGE,mappedBy="category")
+    @OneToMany(cascade = CascadeType.ALL,mappedBy="category")
     @JsonIgnoreProperties("category")
     private List<Cabin> cabins = new ArrayList<>();
 
@@ -35,6 +35,10 @@ public class Category {
     }
 
     public Category(){}
+
+    public Category(String description){
+        this.description = description;
+    }
 
     public void setName(String name) {
         this.name = name;

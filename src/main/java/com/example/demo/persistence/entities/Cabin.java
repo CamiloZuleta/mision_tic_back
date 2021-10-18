@@ -15,7 +15,7 @@ public class Cabin {
     @Id
     @SequenceGenerator(name="seq", sequenceName = "seq")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     @Column
     private String name;
     @Column
@@ -25,17 +25,17 @@ public class Cabin {
     @Column
     private String description;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     @JsonIgnoreProperties("cabins")
     private Category category;
 
     @JsonIgnoreProperties({"cabin","client"})
-    @OneToMany(cascade=CascadeType.MERGE, mappedBy="cabin")
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="cabin")
     private List<Message> messages = new ArrayList<>();
 
     @JsonIgnoreProperties("cabin")
-    @OneToMany(cascade=CascadeType.MERGE, mappedBy="cabin")
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="cabin")
     private List<Reservation> reservations = new ArrayList<>();
 
 
@@ -57,6 +57,10 @@ public class Cabin {
         this.reservations = reservations;
     }
 
+    public Cabin(String description){
+        this.description = description;
+    }
+
     /**
      *
      */
@@ -66,7 +70,7 @@ public class Cabin {
      *
      * @param id
      */
-    public Cabin(Long id){
+    public Cabin(Integer id){
         this.id = id;
     }
 

@@ -25,14 +25,18 @@ public class Client {
     private Integer age;
 
     @JsonIgnoreProperties({"client"})
-    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "client")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
     private List<Message> messages;
 
     @JsonIgnoreProperties({"client"})
-    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "client")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
     private List<Reservation> reservations;
 
     public Client(){
+    }
+
+    public Client(String name){
+        this.name = name;
     }
 
     public Client(Integer id){

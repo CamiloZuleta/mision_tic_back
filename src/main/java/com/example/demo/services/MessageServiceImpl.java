@@ -1,7 +1,5 @@
 package com.example.demo.services;
 
-import com.example.demo.persistence.entities.Cabin;
-import com.example.demo.persistence.entities.Client;
 import com.example.demo.persistence.entities.Message;
 import com.example.demo.persistence.repository.CabinRepository;
 import com.example.demo.persistence.repository.ClientRepository;
@@ -27,13 +25,6 @@ public class MessageServiceImpl implements EntityService<Message>{
     @Override
     public Message saveEntity(Message entity) {
         boolean cumple = entity.getMessageText().length()<= 250;
-        /*
-        Client client = clientRepository.findById(entity.getClient().getIdClient()).get();
-        Cabin cabin = cabinRepository.findById(entity.getCabin().getId()).get();
-        entity.setCabin(cabin);
-        entity.setClient(client);
-
-         */
         if(cumple){
             return messageRepository.save(entity);
         }
@@ -43,5 +34,25 @@ public class MessageServiceImpl implements EntityService<Message>{
     @Override
     public List<Message> getEntity() {
         return messageRepository.findAll();
+    }
+
+    @Override
+    public Message updateEntity(Message entity) {
+        boolean comply = entity.getMessageText().length()<=250;
+        Message message = messageRepository.findById(entity.getIdMessage()).orElse(new Message("Not updated"));
+        if(comply && !message.getMessageText().equals("Not updated")){
+            message.setMessageText(entity.getMessageText());
+            messageRepository.save(message);
+        }
+        return message;
+    }
+
+    @Override
+    public Message deleteEntity(Integer id) {
+        Message message  = messageRepository.findById(id).orElse(new Message("Not deleted"));
+        if (!message.getMessageText().equals("Not deleted")){
+            messageRepository.deleteById(id);
+        }
+        return message;
     }
 }

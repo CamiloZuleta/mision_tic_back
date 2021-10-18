@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import com.example.demo.persistence.entities.Cabin;
 import com.example.demo.persistence.entities.Client;
 import com.example.demo.persistence.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,5 +27,27 @@ public class ClientServiceImpl implements EntityService<Client>{
     @Override
     public List<Client> getEntity() {
         return clientRepository.findAll();
+    }
+
+    @Override
+    public Client updateEntity(Client entity) {
+        boolean comply = entity.getPassword().length() <= 45 && entity.getName().length()<=250 && entity.getAge() <= 10000;
+        Client client = clientRepository.findById(entity.getIdClient()).orElse(new Client("Not updated"));
+        if(comply && !client.getName().equals("Not updated")){
+            client.setName(entity.getName());
+            client.setAge(entity.getAge());
+            client.setPassword(entity.getPassword());
+            clientRepository.save(client);
+        }
+        return client;
+    }
+
+    @Override
+    public Client deleteEntity(Integer id) {
+        Client client  = new Client("Not deleted");
+        if (!client.getName().equals("Not deleted")){
+            clientRepository.deleteById(id);
+        }
+        return client;
     }
 }
