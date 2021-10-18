@@ -1,6 +1,5 @@
 package com.example.demo.services;
 
-import com.example.demo.persistence.entities.Cabin;
 import com.example.demo.persistence.entities.Client;
 import com.example.demo.persistence.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +43,7 @@ public class ClientServiceImpl implements EntityService<Client>{
 
     @Override
     public Client deleteEntity(Integer id) {
-        Client client  = new Client("Not deleted");
+        Client client  = clientRepository.findById(id).orElse(new Client("Not deleted"));
         if (!client.getName().equals("Not deleted")){
             clientRepository.deleteById(id);
         }
