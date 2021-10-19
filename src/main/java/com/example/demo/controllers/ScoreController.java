@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping(path = "/api/Score")
 public class ScoreController implements EntityController<Score>{
     private static final Logger logger = LogManager.getLogger(MessageController.class);

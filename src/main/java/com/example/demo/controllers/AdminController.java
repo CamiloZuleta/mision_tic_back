@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping(path = "/api/Admin")
 public class AdminController implements EntityController<Admin> {
     private static final Logger logger = LogManager.getLogger(MessageController.class);
