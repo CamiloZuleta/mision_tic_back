@@ -7,10 +7,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @RestController
@@ -57,5 +61,15 @@ public class ReservationController implements EntityController<Reservation>{
             return new ResponseEntity<>(reservation, HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(reservation, HttpStatus.NO_CONTENT);
+    }
+    @GetMapping(path = "/report-dates/{startDate}/{endDate}")
+    public List<Reservation> reportDates(@PathVariable("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+                                         @PathVariable("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate){
+        List<Reservation> list = reservationService.findByDates(startDate, endDate);
+        return list;
+    }
+    @GetMapping(path = "report-status")
+    public LinkedHashMap<String, Integer> reportDates(){
+        return reservationService.findByStatus();
     }
 }

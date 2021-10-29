@@ -8,6 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @RestController
@@ -50,5 +53,9 @@ public class ClientController implements EntityController<Client>{
             return new ResponseEntity<>(client, HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(client, HttpStatus.NO_CONTENT);
+    }
+    @GetMapping(path="/report-clients")
+    public ArrayList<LinkedHashMap<String,Object>> reportClient(){
+        return clientService.reportClient();
     }
 }
