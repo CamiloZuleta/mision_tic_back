@@ -50,11 +50,17 @@ public class Cabin {
     List<Reservation> reservations) {
         this.brand = brand;
         this.rooms = rooms;
-        this.category = category;
+        //this.category = category;
         this.name = name;
         this.description = description;
         this.messages = messages;
         this.reservations = reservations;
+    }
+    public Cabin(String brand, String name, Integer rooms, String description ){
+        this.brand = brand;
+        this.rooms = rooms;
+        this.name = name;
+        this.description = description;
     }
 
     public Cabin(String description){
@@ -94,9 +100,11 @@ public class Cabin {
      *
      * @param category
      */
+
     public void setCategory(Category category) {
         this.category = category;
     }
+
 
     /**
      *

@@ -1,6 +1,5 @@
 package com.example.demo.persistence.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 
@@ -23,7 +22,8 @@ public class Category {
     @Column(name="description")
     private String description;
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy="category")
+    //
+    @OneToMany(cascade = CascadeType.MERGE,mappedBy="category")
     @JsonIgnoreProperties("category")
     private List<Cabin> cabins = new ArrayList<>();
 

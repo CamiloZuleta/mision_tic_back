@@ -8,42 +8,37 @@ import com.example.demo.persistence.repository.CabinRepository;
 import com.example.demo.persistence.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class CabinServiceImpl implements EntityService<Cabin>{
-
     @Autowired
     CabinRepository cabinRepository;
-
     @Autowired
     CategoryRepository categoryRepository;
-
     @Override
     public Cabin saveEntity(Cabin cabin) {
         boolean cumple = cabin.getBrand().length() <= 45 && cabin.getName().length()<= 45 && cabin.getRooms()>=0 &&
                 cabin.getRooms()<=15 && cabin.getDescription().length() <= 250;
-        Category category = cabin.getCategory() == null? new Category(): cabin.getCategory().getId() == null?
-                new Category():categoryRepository.findById(cabin.getCategory().getId()).get();
+        Category category;
+        if (cabin.getCategory() !=null) {
+            category = cabin.getCategory() == null ? new Category() : cabin.getCategory().getId() == null ?
+                    new Category() : categoryRepository.findById(cabin.getCategory().getId()).get();
+            cabin.setCategory(category);
+        }
         List<Message> messages = new ArrayList<Message>();
         List<Reservation> reservations = new ArrayList<Reservation>();
-        cabin.setCategory(category);
-
         if(cumple){
             Cabin cabin1 = cabinRepository.save(cabin);
             return cabin1;
         }
-
         return new Cabin(null,null, null, null, null,null, null);
     }
-
     @Override
     public List<Cabin> getEntity() {
         return cabinRepository.findAll();
     }
-
     @Override
     public Cabin updateEntity(Cabin entity) {
         boolean comply = entity.getBrand().length()<=45 && entity.getName().length() <= 45 && entity.getRooms() >=0&&
@@ -58,7 +53,6 @@ public class CabinServiceImpl implements EntityService<Cabin>{
         }
         return cabin;
     }
-
     @Override
     public Cabin deleteEntity(Integer id) {
         Cabin cabin  = cabinRepository.findById(id).orElse(new Cabin("Not deleted"));
@@ -70,6 +64,4 @@ public class CabinServiceImpl implements EntityService<Cabin>{
         }
         return cabin;
     }
-
-
 }
