@@ -2,6 +2,7 @@ package com.example.demo.controllers;
 
 import com.example.demo.persistence.entities.Cabin;
 import com.example.demo.persistence.entities.Reservation;
+import com.example.demo.services.ClientServiceImpl;
 import com.example.demo.services.ReservationServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.LogManager;
@@ -12,10 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @CrossOrigin
@@ -26,6 +24,9 @@ public class ReservationController implements EntityController<Reservation>{
 
     @Autowired
     ObjectMapper mapper;
+
+    @Autowired
+    ClientServiceImpl clientService;
 
     private static final Logger logger = LogManager.getLogger(MessageController.class);
 
@@ -71,5 +72,9 @@ public class ReservationController implements EntityController<Reservation>{
     @GetMapping(path = "report-status")
     public LinkedHashMap<String, Integer> reportDates(){
         return reservationService.findByStatus();
+    }
+    @GetMapping(path="/report-clients")
+    public ArrayList<LinkedHashMap<String,Object>> reportClient(){
+        return clientService.reportClient();
     }
 }
